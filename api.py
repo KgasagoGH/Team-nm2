@@ -30,7 +30,7 @@ app = Flask(__name__)
 # Load our model into memory.
 # Please update this path to reflect your own trained model.
 static_model = load_model(
-    path_to_model='assets/trained-models/load_shortfall_simple_lm_regression.pkl')
+    path_to_model='assets/trained-models/linear_model.pkl')
 
 print ('-'*40)
 print ('Model successfully loaded')
@@ -46,7 +46,7 @@ print ('-'*40)
 # is sent to our interface located at:
 # http:{Host-machine-ip-address}:5000/api_v0.1
 @app.route('/api_v0.1', methods=['POST'])
-def model_prediction():
+def model_prediction(data):
     # We retrieve the data payload of the POST request
     data = request.get_json(force=True)
     # We then preprocess our data, and use our pretrained model to make a
