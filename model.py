@@ -73,7 +73,7 @@ def _preprocess_data(data):
        'Valencia_temp_min', 'Barcelona_temp_max', 'Madrid_temp_max',
        'Barcelona_temp', 'Bilbao_temp_min', 'Bilbao_temp',
        'Barcelona_temp_min', 'Bilbao_temp_max', 'Seville_temp_min',
-       'Madrid_temp', 'Madrid_temp_min', 'load_shortfall_3h']
+       'Madrid_temp', 'Madrid_temp_min']
     predict_vector = feature_vector_df[columns_to_select]
 
     # ------------------------------------------------------------------------
