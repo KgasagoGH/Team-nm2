@@ -22,56 +22,65 @@
 """
 
 # Helper Dependencies
-import pickle
+import numpy as np
 import pandas as pd
-from sklearn.impute import SimpleImputer
-from sklearn.feature_extraction import FeatureHasher
-from sklearn.feature_selection import SelectKBest, chi2
-from sklearn.preprocessing import StandardScaler
+import pickle
+import json
 
-def _preprocess_data(df, categorical_columns, numerical_columns):
-    """Preprocesses a pandas DataFrame for machine learning.
+def _preprocess_data(data):
+    """Private helper function to preprocess data for model prediction.
 
-    Args:
-        df: A pandas DataFrame.
-        categorical_columns: A list of strings, representing the names of the categorical columns in the DataFrame.
-        numerical_columns: A list of strings, representing the names of the numerical columns in the DataFrame.
+    NB: If you have utilised feature engineering/selection in order to create
+    your final model you will need to define the code here.
 
-    Returns:
-        A pandas DataFrame with the following preprocessing applied:
-            1. Missing values are imputed with the mean or mode, depending on the column type.
-            2. Categorical columns are hashed.
-            3. Numerical columns are standardized.
-            4. Features are selected using chi-squared selection.
+
+    Parameters
+    ----------
+    data : str
+        The data payload received within POST requests sent to our API.
+
+    Returns
+    -------
+    Pandas DataFrame : <class 'pandas.core.frame.DataFrame'>
+        The preprocessed data, ready to be used our model for prediction.
     """
+    # Convert the json string to a python dictionary object
+    feature_vector_dict = json.loads(data)
+    # Load the dictionary as a Pandas DataFrame.
+    feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
 
-    # Impute missing values.
-    imputer = SimpleImputer(strategy='mean')
-    df = imputer.fit_transform(df)
+    # ---------------------------------------------------------------
+    # NOTE: You will need to swap the lines below for your own data
+    # preprocessing methods.
+    #
+    # The code below is for demonstration purposes only. You will not
+    # receive marks for submitting this code in an unchanged state.
+    # ---------------------------------------------------------------
 
-    # Hash categorical columns.
-    hasher = FeatureHasher()
-    categorical_data = hasher.fit_transform(df[categorical_columns])
-    numerical_data = df[numerical_columns]
+    # ----------- Replace this code with your own preprocessing steps --------
+    columns_to_select = ['Madrid_wind_speed', 'Valencia_wind_deg',
+       'Bilbao_rain_1h', 'Valencia_wind_speed', 'Seville_humidity',
+       'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed',
+       'Seville_clouds_all', 'Bilbao_wind_deg', 'Barcelona_wind_speed',
+       'Barcelona_wind_deg', 'Madrid_clouds_all', 'Seville_wind_speed',
+       'Barcelona_rain_1h', 'Seville_pressure', 'Seville_rain_1h',
+       'Bilbao_snow_3h', 'Barcelona_pressure', 'Seville_rain_3h',
+       'Madrid_rain_1h', 'Barcelona_rain_3h', 'Valencia_snow_3h',
+       'Madrid_weather_id', 'Barcelona_weather_id', 'Bilbao_pressure',
+       'Seville_weather_id', 'Valencia_pressure', 'Seville_temp_max',
+       'Madrid_pressure', 'Valencia_temp_max', 'Valencia_temp',
+       'Bilbao_weather_id', 'Seville_temp', 'Valencia_humidity',
+       'Valencia_temp_min', 'Barcelona_temp_max', 'Madrid_temp_max',
+       'Barcelona_temp', 'Bilbao_temp_min', 'Bilbao_temp',
+       'Barcelona_temp_min', 'Bilbao_temp_max', 'Seville_temp_min',
+       'Madrid_temp', 'Madrid_temp_min']
+    predict_vector = feature_vector_df[columns_to_select]
 
-    # Combine the categorical and numerical data.
-    df = pd.concat([numerical_data, categorical_data], axis=1)
+    # ------------------------------------------------------------------------
 
-    # Standardize numerical columns.
-    scaler = StandardScaler()
-    df[numerical_columns] = scaler.fit_transform(df[numerical_columns])
+    return predict_vector
 
-    # Select features using chi-squared selection.
-    selector = SelectKBest(chi2, k=10)
-    selector.fit(df, df['target'])
-    selected_features = selector.get_support(indices=True)
-
-    # Select the selected features.
-    df = df.iloc[:, selected_features]
-
-    return df
-
-def load_model(path_to_model: str):
+def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
 
     Parameters
@@ -85,10 +94,16 @@ def load_model(path_to_model: str):
     -------
     <class: sklearn.estimator>
         The pretrained model loaded into memory.
+
     """
     return pickle.load(open(path_to_model, 'rb'))
 
-def make_prediction(data, model, df, categorical_columns, numerical_columns):
+
+""" You may use this section (above the make_prediction function) of the python script to implement 
+    any auxiliary functions required to process your model's artifacts.
+"""
+
+def make_prediction(data, model):
     """Prepare request data for model prediction.
 
     Parameters
@@ -97,21 +112,16 @@ def make_prediction(data, model, df, categorical_columns, numerical_columns):
         The data payload received within POST requests sent to our API.
     model : <class: sklearn.estimator>
         An sklearn model object.
-    df : pd.DataFrame
-        The dataset for preprocessing.
-    categorical_columns : list
-        List of column names that are categorical.
-    numerical_columns : list
-        List of column names that are numerical.
 
     Returns
     -------
     list
         A 1-D python list containing the model prediction.
+
     """
     # Data preprocessing.
-    prep_data = _preprocess_data(data, df, categorical_columns, numerical_columns)
+    prep_data = _preprocess_data(data)
     # Perform prediction with model and preprocessed data.
     prediction = model.predict(prep_data)
-    # Format as list for output standardization.
+    # Format as list for output standardisation.
     return prediction[0].tolist()
