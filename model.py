@@ -58,7 +58,7 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df['time', 'Madrid_wind_speed', 'Valencia_wind_deg',
+    columns_to_select = ['time', 'Madrid_wind_speed', 'Valencia_wind_deg',
        'Bilbao_rain_1h', 'Valencia_wind_speed', 'Seville_humidity',
        'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed',
        'Seville_clouds_all', 'Bilbao_wind_deg', 'Barcelona_wind_speed',
@@ -74,6 +74,8 @@ def _preprocess_data(data):
        'Barcelona_temp', 'Bilbao_temp_min', 'Bilbao_temp',
        'Barcelona_temp_min', 'Bilbao_temp_max', 'Seville_temp_min',
        'Madrid_temp', 'Madrid_temp_min', 'load_shortfall_3h']
+    predict_vector = feature_vector_df[columns_to_select]
+
     # ------------------------------------------------------------------------
 
     return predict_vector
