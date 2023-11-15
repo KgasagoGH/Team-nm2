@@ -22,42 +22,32 @@
 """
 
 # Helper Dependencies
-import numpy as np
-import pandas as pd
 import pickle
-import json
+import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.preprocessing import StandardScaler
 
-def _preprocess_data(data, df, categorical_columns, numerical_columns):
-    """Private helper function to preprocess data for model prediction.
+def _preprocess_data(df, categorical_columns, numerical_columns):
+    """Preprocesses a pandas DataFrame for machine learning.
 
-    Parameters
-    ----------
-    data : str
-        The data payload received within POST requests sent to our API.
-    df : pd.DataFrame
-        The dataset for preprocessing.
-    categorical_columns : list
-        List of column names that are categorical.
-    numerical_columns : list
-        List of column names that are numerical.
+    Args:
+        df: A pandas DataFrame.
+        categorical_columns: A list of strings, representing the names of the categorical columns in the DataFrame.
+        numerical_columns: A list of strings, representing the names of the numerical columns in the DataFrame.
 
-    Returns
-    -------
-    pd.DataFrame
-        The preprocessed data, ready to be used by our model for prediction.
+    Returns:
+        A pandas DataFrame with the following preprocessing applied:
+            1. Missing values are imputed with the mean or mode, depending on the column type.
+            2. Categorical columns are hashed.
+            3. Numerical columns are standardized.
+            4. Features are selected using chi-squared selection.
     """
-    # Convert the json string to a python dictionary object
-    feature_vector_dict = json.loads(data)
-    # Load the dictionary as a Pandas DataFrame.
-    feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
 
     # Impute missing values.
     imputer = SimpleImputer(strategy='mean')
-    df[numerical_columns] = imputer.fit_transform(df[numerical_columns])
+    df = imputer.fit_transform(df)
 
     # Hash categorical columns.
     hasher = FeatureHasher()
@@ -65,7 +55,7 @@ def _preprocess_data(data, df, categorical_columns, numerical_columns):
     numerical_data = df[numerical_columns]
 
     # Combine the categorical and numerical data.
-    df = pd.concat([numerical_data, pd.DataFrame(categorical_data.toarray())], axis=1)
+    df = pd.concat([numerical_data, categorical_data], axis=1)
 
     # Standardize numerical columns.
     scaler = StandardScaler()
