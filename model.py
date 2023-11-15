@@ -44,6 +44,10 @@ def _preprocess_data(data):
     feature_vector_dict = json.loads(data)
     # Load the dictionary as a Pandas DataFrame.
     feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
+    # Ensure numerical columns are present in the DataFrame
+    missing_columns = set(numerical_columns) - set(feature_vector_df.columns)
+    if missing_columns:
+        raise KeyError(f"{missing_columns} not in index")
 
     # Specify numerical and categorical columns
     numerical_columns = ['Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Valencia_wind_speed',
