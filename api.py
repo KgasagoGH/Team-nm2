@@ -31,6 +31,7 @@ app = Flask(__name__)
 # Please update this path to reflect your own trained model.
 static_model = load_model(
     path_to_model='assets/trained-models/best_model.pkl')
+    path_to_model='assets/trained-models/load_shortfall_simple_lm_regression.pkl')
 
 print ('-'*40)
 print ('Model successfully loaded')
@@ -47,7 +48,6 @@ print ('-'*40)
 # http:{Host-machine-ip-address}:5000/api_v0.1
 @app.route('/api_v0.1', methods=['POST'])
 
-#@app.route('/3.249.125.8:5000/api_v0.1', methods=['POST'])
 def model_prediction():
     # We retrieve the data payload of the POST request
     data = request.get_json(force=True)
@@ -65,3 +65,4 @@ def model_prediction():
 # update your API code.
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)
