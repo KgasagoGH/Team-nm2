@@ -58,10 +58,15 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_speed', 'Valencia_temp_max', 'Valencia_temp', 'Seville_temp', 'Valencia_humidity', 'Valencia_temp_min', 
-                                        'Barcelona_temp_max', 'Madrid_temp_max', 'Barcelona_temp',
-                                        'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min',
-                                        'Bilbao_temp_max', 'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min']]
+    predict_vector = feature_vector_df[['Column_0','Column_1','Column_2','Column_3','Column_4','Column_5',
+                                        'Column_6','Column_7','Column_8','Column_9','Column_10','Column_11','Column_12',
+                                        'Column_13','Column_14','Column_15','Column_16','Column_17','Column_18','Column_19',
+                                         'column_20','Column_21','Column_22','Column_23','Column_24','Column_25','Column_26','Column_27',
+                                          'Column_28','Column_29','Column_30','Column_31','Column_32','Column_33','Column_34','Column_35',
+                                           'Column_36','Column_37','Column_38','Column_39','Column_40','Column_41','Column_42','Column_43',
+                                            'Column_44','Column_45','Column_46','Column_47','Column_48','Column_49','Column_50','Column_51',
+                                             'Column_52','Column_53','Column_54','Column_55','Column_56','Column_57','Column_58','Column_59',
+                                              'Column_60']]
     # ------------------------------------------------------------------------
     return predict_vector
 
