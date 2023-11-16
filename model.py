@@ -40,7 +40,7 @@ def _preprocess_data(data):
         The data payload received within POST requests sent to our API.
 
     Returns
-    -------
+    ------- 
     Pandas DataFrame : <class 'pandas.core.frame.DataFrame'>
         The preprocessed data, ready to be used our model for prediction.
     """
