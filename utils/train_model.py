@@ -13,7 +13,6 @@
 import pandas as pd
 import pickle
 from sklearn.linear_model import LinearRegression
-import lightgbm
 
 # Fetch training data and preprocess for modeling
 train = pd.read_csv('./data/df_train.csv')
@@ -27,6 +26,6 @@ print ("Training Model...")
 lm_regression.fit(X_train, y_train)
 
 # Pickle model for use within our API
-save_path = '../assets/trained-models/lgbm_model.pkl'
+save_path = '../assets/trained-models/basic_model.pkl'
 print (f"Training completed. Saving model to: {save_path}")
 pickle.dump(lm_regression, open(save_path,'wb'))
