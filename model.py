@@ -68,9 +68,7 @@ def _preprocess_data(data):
     'Valencia_temp','Bilbao_weather_id','Seville_temp','Valencia_humidity',
     'Valencia_temp_min','Barcelona_temp_max','Madrid_temp_max','Barcelona_temp',
     'Bilbao_temp_min','Bilbao_temp','Barcelona_temp_min','Bilbao_temp_max',
-    'Seville_temp_min','Madrid_temp','Madrid_temp_min','Day','Month','Year',
-    'Hour','Start_minute','start_seconds','Start_weekend','Start_week_of_year',
-    'winter','spring','summer','autumn']]
+    'Seville_temp_min','Madrid_temp','Madrid_temp_min']]
     # ------------------------------------------------------------------------
 
     return predict_vector
