@@ -58,14 +58,12 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_speed', 
-                                        'Valencia_temp_max', 'Valencia_temp', 'Seville_temp',
-                                        'Valencia_humidity', 'Valencia_temp_min', 
-                                        'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min',
+      
+    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_speed', 'Valencia_temp_max', 'Valencia_temp', 'Seville_temp', 'Valencia_humidity', 'Valencia_temp_min', 
                                         'Barcelona_temp_max', 'Madrid_temp_max', 'Barcelona_temp',
-                                        'Madrid_temp', 'Madrid_temp_min','Bilbao_temp_max', 'Seville_temp_min',]]
+                                        'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min',
+                                        'Bilbao_temp_max', 'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min']] # Define the dsired order of column
     # ------------------------------------------------------------------------
-
     return predict_vector
 
 def load_model(path_to_model:str):
