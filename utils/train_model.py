@@ -18,7 +18,7 @@ from sklearn.linear_model import LinearRegression
 train = pd.read_csv('./data/df_train.csv')
 
 y_train = train[['load_shortfall_3h']]
-X_train = train[['time',Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Valencia_wind_speed',
+X_train = train[['time','Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Valencia_wind_speed',
                   'Seville_humidity', 'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed', 
                   'Seville_clouds_all', 'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
                     'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h', 'Seville_pressure', 
