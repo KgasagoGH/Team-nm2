@@ -18,7 +18,7 @@ from sklearn.linear_model import LinearRegression
 train = pd.read_csv('./data/df_train.csv')
 
 y_train = train[['load_shortfall_3h']]
-X_train = train[['Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Valencia_wind_speed',
+X_train = train[['time','Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Valencia_wind_speed',
                   'Seville_humidity', 'Madrid_humidity', 'Bilbao_clouds_all', 'Bilbao_wind_speed', 
                   'Seville_clouds_all', 'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
                     'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h', 'Seville_pressure', 
@@ -29,9 +29,7 @@ X_train = train[['Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h', 'Va
                       'Valencia_temp', 'Bilbao_weather_id', 'Seville_temp', 'Valencia_humidity', 
                       'Valencia_temp_min', 'Barcelona_temp_max', 'Madrid_temp_max', 'Barcelona_temp', 
                       'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min', 'Bilbao_temp_max', 
-                      'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min', 'Day', 'Month', 'Year', 
-                      'Hour', 'Start_minute', 'start_seconds', 'Start_weekend', 'Start_week_of_year',
-                        'winter', 'spring', 'summer', 'autumn']]
+                      'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min']]
 # Fit model
 lm_regression = LinearRegression(normalize=True)
 print ("Training Model...")
